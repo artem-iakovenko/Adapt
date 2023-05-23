@@ -82,6 +82,7 @@ def get_credentials():
             request_info = network_data.get('message').get('params').get('request')
             request_url = request_info.get('url')
             request_method = request_info.get('method')
+
             if request_url is None:
                 continue
         except AttributeError:
@@ -206,6 +207,8 @@ def update_spreadsheets(data):
 def main():
     credentials = get_credentials()
     search_queries = credentials[1]
+    #print("SEARCH QUERIES MAIN")
+    #print(search_queries)
     cookie = credentials[2]
     with open('cookie.txt', 'w') as f:
         f.write(str(cookie))
@@ -216,7 +219,7 @@ def main():
     print(f'Prepared COOKIE: {cookie}')
     r_headers['Cookie'] = cookie
     s = 1
-    for search_query in search_queries:
+    for search_query in search_queries[:1]:
         unix_time = get_unixtime()
         post_data = json.loads(search_query)
         post_data['limit'] = 100

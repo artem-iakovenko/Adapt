@@ -108,10 +108,21 @@ def company_handler():
                 company_array = parse_response(company_response)
                 backup[company_id] = company_array
         gsheet_data.append(company_array)
+        '''
         if len(gsheet_data) == 10:
             update_spreadsheets(gsheet_data, curr_ind)
             curr_ind += 10
             gsheet_data = []
+        #the last iteration - write to excel the last portion of company data
+        if len(gsheet_data) < 10:
+            update_spreadsheets(gsheet_data, curr_ind)
+            curr_ind += len(gsheet_data)
+            gsheet_data = []
+        '''
+        update_spreadsheets(gsheet_data, curr_ind)
+        curr_ind += len(gsheet_data)
+        gsheet_data = []
+
         iteration += 1
         time.sleep(2)
         print("=====================================================")
